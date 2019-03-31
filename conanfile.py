@@ -10,7 +10,7 @@ class SfmlConan(ConanFile):
     version = '2.5.1'
     description = 'Simple and Fast Multimedia Library'
     url = 'https://github.com/bincrafters/conan-sfml'
-    homepage = 'https://github.com/SFML/SFML'
+    homepage = 'https://github.com/kristoncosta/SFML'
     author = 'Bincrafters <bincrafters@gmail.com>'
     license = "ZLIB"
     exports = ['LICENSE.md']
@@ -75,9 +75,8 @@ class SfmlConan(ConanFile):
                     installer.install(package)
 
     def source(self):
-        tools.get('{0}/archive/{1}.tar.gz'.format(self.homepage, self.version))
-        extracted_dir = 'SFML-' + self.version
-        os.rename(extracted_dir, self._source_subfolder)
+        git = tools.Git(folder=self._source_subfolder)
+        git.clone('https://github.com/KristonCosta/SFML.git')
         tools.replace_in_file(self._source_subfolder + '/cmake/Modules/FindFLAC.cmake',
                               'find_library(FLAC_LIBRARY NAMES FLAC)',
                               'find_library(FLAC_LIBRARY NAMES flac)')
